@@ -9,8 +9,8 @@ export default {
   theme: {
     extend: {
       colors: {
-        primary: '#1E1E2E',  // Dark theme primary color
-        secondary: '#FABD2F', // Accent color
+        primary: '#1E1E2E',  
+        secondary: '#FABD2F', 
         background: '#0F172A',
         textLight: '#CBD5E1',
         textDark: '#94A3B8'
