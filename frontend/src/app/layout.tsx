@@ -1,5 +1,6 @@
 import './globals.css';
 import Header from '@/components/Header';
+import Footer from '@/components/Footer';
 
 export const metadata = {
   title: "Jake's Spectrum Studio",
@@ -16,6 +17,7 @@ export default function RootLayout({
       <body>
         <Header />
         <main className="pt-20">{children}</main>
+        <Footer />
       </body>
     </html>
   );
