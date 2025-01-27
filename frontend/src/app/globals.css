@@ -5,3 +5,9 @@
 body {
   @apply bg-background text-textLight font-sans;
 }
+
+@layer utilities {
+  .nav-hidden {
+    @apply hidden md:block;
+  }
+}
