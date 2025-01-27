@@ -3,9 +3,29 @@ const { body, validationResult } = require('express-validator');
 const jwt = require('jsonwebtoken');
 const userModel = require('../models/userModel');
 const bcrypt = require('bcryptjs');
-
+const authenticateToken = require('../middleware/authMiddleware');
 
 const router = express.Router();
+
+// Protected route to get user profile
+router.get('/profile', authenticateToken, async (req, res) => {
+    try {
+        const user = await userModel.findUserByEmail(req.user.email);
+
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+
+        res.json({
+            id: user.id,
+            username: user.username,
+            email: user.email,
+            created_at: user.created_at
+        });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
 
 // User Registration (Signup)
 router.post(
