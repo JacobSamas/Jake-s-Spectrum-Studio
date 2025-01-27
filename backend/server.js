@@ -22,13 +22,21 @@ app.use('/users', userRoutes);
 // Route to add a new palette
 app.post('/palettes', async (req, res) => {
     const { name, colors } = req.body;
-    try {
-        const result = await paletteModel.createPalette(name, colors);
-        res.status(201).json({ message: 'Palette added', id: result.insertId });
-    } catch (err) {
-        res.status(500).json({ error: err.message });
+  
+    if (!name || !colors) {
+      return res.status(400).json({ error: 'Name and colors are required' });
     }
-});
+  
+    try {
+      const result = await db.query('INSERT INTO palettes (name, colors) VALUES (?, ?)', [
+        name,
+        colors,
+      ]);
+      res.status(201).json({ message: 'Palette added successfully', id: result.insertId });
+    } catch (err) {
+      res.status(500).json({ error: err.message });
+    }
+  });
 
 // Route to get all palettes
 app.get('/palettes', async (req, res) => {

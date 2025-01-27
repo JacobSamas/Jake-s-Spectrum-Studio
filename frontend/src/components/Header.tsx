@@ -8,6 +8,7 @@ import { FiMenu, FiX } from 'react-icons/fi';
 const navLinks = [
   { name: 'Home', href: '/' },
   { name: 'Palettes', href: '/palettes' },
+  { name: 'Generate', href: '/generator' },
   { name: 'About', href: '/about' },
   { name: 'Contact', href: '/contact' },
 ];
