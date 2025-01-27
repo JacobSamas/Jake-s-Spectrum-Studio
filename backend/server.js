@@ -1,5 +1,6 @@
 const express = require('express');
 const dotenv = require('dotenv');
+const cors = require('cors');
 const db = require('./src/config/db');
 const paletteModel = require('./src/models/paletteModel');
 const userRoutes = require('./src/routes/userRoutes');
@@ -9,6 +10,8 @@ dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 5001;  
+
+app.use(cors());
 
 app.use(errorHandler);
 
