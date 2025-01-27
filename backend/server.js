@@ -2,11 +2,14 @@ const express = require('express');
 const dotenv = require('dotenv');
 const db = require('./src/config/db');
 const paletteModel = require('./src/models/paletteModel');
+const errorHandler = require('./src/middleware/errorHandler');
 
 dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 5001;  
+
+app.use(errorHandler);
 
 app.use(express.json());  // Middleware to parse JSON requests
 
@@ -50,6 +53,26 @@ app.delete('/palettes/:id', async (req, res) => {
     try {
         await paletteModel.deletePalette(req.params.id);
         res.json({ message: 'Palette deleted' });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
+// Route to update a palette by ID
+app.put('/palettes/:id', async (req, res) => {
+    const { id } = req.params;
+    const { name, colors } = req.body;
+
+    if (!name || !colors) {
+        return res.status(400).json({ error: 'Name and colors are required' });
+    }
+
+    try {
+        const result = await paletteModel.updatePalette(id, name, colors);
+        if (result.affectedRows === 0) {
+            return res.status(404).json({ error: 'Palette not found' });
+        }
+        res.json({ message: 'Palette updated successfully' });
     } catch (err) {
         res.status(500).json({ error: err.message });
     }

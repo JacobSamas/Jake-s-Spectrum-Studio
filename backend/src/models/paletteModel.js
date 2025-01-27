@@ -43,9 +43,23 @@ const deletePalette = async (id) => {
     }
 };
 
+// Function to update a color palette by ID
+const updatePalette = async (id, name, colors) => {
+    try {
+        const [result] = await db.query(
+            'UPDATE palettes SET name = ?, colors = ? WHERE id = ?',
+            [name, JSON.stringify(colors), id]
+        );
+        return result;
+    } catch (err) {
+        throw new Error('Error updating palette: ' + err.message);
+    }
+};
+
 module.exports = {
     createPalette,
     getAllPalettes,
     getPaletteById,
-    deletePalette
+    deletePalette,
+    updatePalette
 };
