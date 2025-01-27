@@ -2,6 +2,7 @@ const express = require('express');
 const dotenv = require('dotenv');
 const db = require('./src/config/db');
 const paletteModel = require('./src/models/paletteModel');
+const userRoutes = require('./src/routes/userRoutes');
 const errorHandler = require('./src/middleware/errorHandler');
 
 dotenv.config();
@@ -11,7 +12,9 @@ const PORT = process.env.PORT || 5001;
 
 app.use(errorHandler);
 
-app.use(express.json());  // Middleware to parse JSON requests
+app.use(express.json());  
+
+app.use('/users', userRoutes);
 
 // Route to add a new palette
 app.post('/palettes', async (req, res) => {
